@@ -1,0 +1,38 @@
+[
+  {
+    "t": 14.9,
+    "alt": "Hiding in the noise: how an attacker can imitate natural noise on a satellite downlink, and why the testbed still catches it"
+  },
+  {
+    "t": 52.4,
+    "alt": "The signal we chose: a fixed X-band carrier at 8477.8 MHz, moved only by Doppler, −88.8 to −74.4 dBm at Zaghouan"
+  },
+  {
+    "t": 70.4,
+    "alt": "Natural noise has a signature: Gaussian thermal noise, and carrier, power and timing residuals inside a narrow envelope"
+  },
+  {
+    "t": 95.2,
+    "alt": "Three ways to look like nature: noise-shaped jamming, fade-mimicking spoofing, bit flips disguised as bit errors"
+  },
+  {
+    "t": 126.6,
+    "alt": "The physical layer: a jammer 5.3 dB below the thermal noise stays hidden, bounded to 1.1 dB of SNR, and every frame verifies"
+  },
+  {
+    "t": 134.0,
+    "alt": "Push harder and the chi-square gate fires: the imitation becomes visible"
+  },
+  {
+    "t": 150.4,
+    "alt": "The statistical layer: an Isolation Forest trained on clean passes reads what the chi-square cannot see"
+  },
+  {
+    "t": 176.3,
+    "alt": "The data layer: noise cannot forge an HMAC-SHA256 tag; one failure is resent, two tiers at once quarantine the link"
+  },
+  {
+    "t": 192.6,
+    "alt": "Result: every attack packet flagged, no corrupted frame reached the analyst, about 1.6% of genuine packets held for review"
+  }
+]

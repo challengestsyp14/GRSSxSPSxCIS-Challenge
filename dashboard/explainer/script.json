@@ -1,0 +1,159 @@
+{
+  "title": "Hiding in the noise",
+  "pauseS": 0.42,
+  "scenes": [
+    {
+      "id": "intro",
+      "chapter": "Hiding in the noise",
+      "leadS": 2.2,
+      "tailS": 0.9,
+      "lines": [
+        {
+          "text": "Every satellite signal reaches the ground buried in natural noise."
+        },
+        {
+          "text": "A careful attacker can shape an attack to look exactly like that noise."
+        },
+        {
+          "text": "This is how it works, and how our ground-link testbed still catches it."
+        }
+      ]
+    },
+    {
+      "id": "signal",
+      "chapter": "The signal we chose",
+      "leadS": 0.9,
+      "tailS": 1.0,
+      "lines": [
+        {
+          "text": "TerraSAR-X flies at 514 km and sends a fixed X-band carrier at 8477.8 MHz.",
+          "say": "Our satellite, Terra Sar X, flies at five hundred and fourteen kilometres, and sends a fixed X band carrier, at eight thousand, four hundred and seventy-seven point eight megahertz."
+        },
+        {
+          "text": "The frequency is not random: it moves only with the Doppler shift, up to ±199 kHz, which the orbit predicts.",
+          "say": "The frequency is not random. It moves only with the Doppler shift, up to about two hundred kilohertz either way, and the orbit predicts it."
+        },
+        {
+          "text": "At Zaghouan the carrier arrives between −88.8 and −74.4 dBm: an amplitude of 11.4 to 60.0 µV.",
+          "say": "At Zagwan, it arrives between minus eighty-eight point eight and minus seventy-four point four D B M: an amplitude of eleven point four to sixty microvolts."
+        },
+        {
+          "text": "The receiver's noise floor is −100 dBm, so the signal-to-noise ratio runs from 11 to 26 dB over the pass.",
+          "say": "The noise floor is minus one hundred D B M, so the signal-to-noise ratio runs from eleven to twenty-six decibels."
+        }
+      ]
+    },
+    {
+      "id": "natural",
+      "chapter": "What natural noise looks like",
+      "leadS": 0.9,
+      "tailS": 1.0,
+      "lines": [
+        {
+          "text": "Natural noise has a signature."
+        },
+        {
+          "text": "Thermal noise is Gaussian and white: a flat floor across the band."
+        },
+        {
+          "text": "Against the orbit model, the carrier wanders by less than 20 Hz and the power by less than 1 dB.",
+          "say": "Against the orbit model, the carrier wanders by less than twenty hertz, and the power by less than one decibel."
+        },
+        {
+          "text": "That narrow envelope is where an attacker has to hide."
+        }
+      ]
+    },
+    {
+      "id": "imitate",
+      "chapter": "How an attacker imitates it",
+      "leadS": 0.9,
+      "tailS": 1.1,
+      "lines": [
+        {
+          "text": "One: noise-shaped jamming. Gaussian noise, raised slowly like a rain fade, so the floor creeps up instead of jumping."
+        },
+        {
+          "text": "Two: fade-mimicking spoofing. A rogue node matches the Doppler and adds fake fading, so its power sits only 3 dB low.",
+          "say": "Two: fade-mimicking spoofing. A rogue node matches the Doppler and adds fake fading, so its power sits only three decibels low."
+        },
+        {
+          "text": "Three: bit flips disguised as channel errors. Chosen bits are flipped and the checksum recomputed, so the frame just looks noisy."
+        }
+      ]
+    },
+    {
+      "id": "physics",
+      "chapter": "Physical layer · χ²",
+      "leadS": 0.9,
+      "tailS": 1.0,
+      "lines": [
+        {
+          "text": "Our idea is to make every imitation either visible, or bounded: too small to cost the link more than about a decibel."
+        },
+        {
+          "text": "The physical layer is a chi-square engine: range, Doppler, power and phase are each compared with the orbit, in units of their natural spread.",
+          "say": "The physical layer is a chi-square engine. Range, Doppler, power and phase are each compared with the orbit, in units of their natural spread."
+        },
+        {
+          "text": "To stay hidden overhead, injected noise must stay 5.3 dB below the thermal noise: at most 1.1 dB of signal-to-noise ratio, 1.7 dB at the 2° mask where the gate widens. Every frame still verifies.",
+          "say": "To stay hidden overhead, the injected noise must stay five point three decibels below the thermal noise. That is at most one point one decibels of signal-to-noise ratio, or one point seven at the two degree mask, where the gate widens. Every frame still verifies."
+        },
+        {
+          "text": "Push harder, and the chi-square gate fires: a spoofer's 3 dB fade is 14 sigma off the link budget.",
+          "say": "Push harder, and the chi-square gate fires. A spoofer's three decibel fade is fourteen sigma off the link budget."
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "chapter": "Statistical layer · AI",
+      "leadS": 0.8,
+      "tailS": 1.0,
+      "lines": [
+        {
+          "text": "The statistical layer is an Isolation Forest trained only on clean passes."
+        },
+        {
+          "text": "It reads what the chi-square cannot see: the constellation's error, lost frames, arrival jitter, failed tags, and how fast the carrier and power changed."
+        }
+      ]
+    },
+    {
+      "id": "crypto",
+      "chapter": "Data layer · Cryptography",
+      "leadS": 0.8,
+      "tailS": 1.0,
+      "lines": [
+        {
+          "text": "The data layer is cryptography, which noise cannot imitate: every frame carries an HMAC-SHA256 tag made with a secret key.",
+          "say": "The data layer is cryptography, which noise cannot imitate. Every frame carries an H MAC tag, made with a secret key."
+        },
+        {
+          "text": "Change one bit, by accident or on purpose, and the tag breaks: the frame is dropped and requested again."
+        },
+        {
+          "text": "Either deterministic tier, data or physical, rejects a frame. When two tiers fire at once, the link is quarantined, and the key is changed only if someone holds it."
+        }
+      ]
+    },
+    {
+      "id": "result",
+      "chapter": "Result",
+      "leadS": 0.8,
+      "tailS": 4.0,
+      "lines": [
+        {
+          "text": "In our tests, every attack packet was flagged, and no corrupted frame reached the analyst."
+        },
+        {
+          "text": "About one and a half percent of genuine packets were held back for review."
+        },
+        {
+          "text": "Try it live on the testbed, in the dashboard folder of our code.",
+          "say": "Try it live, on our testbed."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "title": "Hiding in the noise",
+  "duration": 194.776,
+  "scenes": [
+    {
+      "id": "intro",
+      "chapter": "Hiding in the noise",
+      "start": 0.0,
+      "end": 15.62,
+      "cues": [
+        {
+          "start": 2.2,
+          "end": 6.088,
+          "text": "Every satellite signal reaches the ground buried in natural noise."
+        },
+        {
+          "start": 6.508,
+          "end": 10.46,
+          "text": "A careful attacker can shape an attack to look exactly like that noise."
+        },
+        {
+          "start": 10.88,
+          "end": 14.72,
+          "text": "This is how it works, and how our ground-link testbed still catches it."
+        }
+      ]
+    },
+    {
+      "id": "signal",
+      "chapter": "The signal we chose",
+      "start": 15.62,
+      "end": 53.02,
+      "cues": [
+        {
+          "start": 16.52,
+          "end": 27.192,
+          "text": "TerraSAR-X flies at 514 km and sends a fixed X-band carrier at 8477.8 MHz."
+        },
+        {
+          "start": 27.612,
+          "end": 35.196,
+          "text": "The frequency is not random: it moves only with the Doppler shift, up to ±199 kHz, which the orbit predicts."
+        },
+        {
+          "start": 35.616,
+          "end": 44.96,
+          "text": "At Zaghouan the carrier arrives between −88.8 and −74.4 dBm: an amplitude of 11.4 to 60.0 µV."
+        },
+        {
+          "start": 45.38,
+          "end": 52.02,
+          "text": "The receiver's noise floor is −100 dBm, so the signal-to-noise ratio runs from 11 to 26 dB over the pass."
+        }
+      ]
+    },
+    {
+      "id": "natural",
+      "chapter": "What natural noise looks like",
+      "start": 53.02,
+      "end": 71.028,
+      "cues": [
+        {
+          "start": 53.92,
+          "end": 55.968,
+          "text": "Natural noise has a signature."
+        },
+        {
+          "start": 56.388,
+          "end": 60.196,
+          "text": "Thermal noise is Gaussian and white: a flat floor across the band."
+        },
+        {
+          "start": 60.616,
+          "end": 66.712,
+          "text": "Against the orbit model, the carrier wanders by less than 20 Hz and the power by less than 1 dB."
+        },
+        {
+          "start": 67.132,
+          "end": 70.028,
+          "text": "That narrow envelope is where an attacker has to hide."
+        }
+      ]
+    },
+    {
+      "id": "imitate",
+      "chapter": "How an attacker imitates it",
+      "start": 71.028,
+      "end": 95.82,
+      "cues": [
+        {
+          "start": 71.928,
+          "end": 79.032,
+          "text": "One: noise-shaped jamming. Gaussian noise, raised slowly like a rain fade, so the floor creeps up instead of jumping."
+        },
+        {
+          "start": 79.452,
+          "end": 87.084,
+          "text": "Two: fade-mimicking spoofing. A rogue node matches the Doppler and adds fake fading, so its power sits only 3 dB low."
+        },
+        {
+          "start": 87.504,
+          "end": 94.72,
+          "text": "Three: bit flips disguised as channel errors. Chosen bits are flipped and the checksum recomputed, so the frame just looks noisy."
+        }
+      ]
+    },
+    {
+      "id": "physics",
+      "chapter": "Physical layer · χ²",
+      "start": 95.82,
+      "end": 134.676,
+      "cues": [
+        {
+          "start": 96.72,
+          "end": 103.12,
+          "text": "Our idea is to make every imitation either visible, or bounded: too small to cost the link more than about a decibel."
+        },
+        {
+          "start": 103.54,
+          "end": 111.252,
+          "text": "The physical layer is a chi-square engine: range, Doppler, power and phase are each compared with the orbit, in units of their natural spread."
+        },
+        {
+          "start": 111.672,
+          "end": 126.488,
+          "text": "To stay hidden overhead, injected noise must stay 5.3 dB below the thermal noise: at most 1.1 dB of signal-to-noise ratio, 1.7 dB at the 2° mask where the gate widens. Every frame still verifies."
+        },
+        {
+          "start": 126.908,
+          "end": 133.676,
+          "text": "Push harder, and the chi-square gate fires: a spoofer's 3 dB fade is 14 sigma off the link budget."
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "chapter": "Statistical layer · AI",
+      "start": 134.676,
+      "end": 151.024,
+      "cues": [
+        {
+          "start": 135.476,
+          "end": 139.604,
+          "text": "The statistical layer is an Isolation Forest trained only on clean passes."
+        },
+        {
+          "start": 140.024,
+          "end": 150.024,
+          "text": "It reads what the chi-square cannot see: the constellation's error, lost frames, arrival jitter, failed tags, and how fast the carrier and power changed."
+        }
+      ]
+    },
+    {
+      "id": "crypto",
+      "chapter": "Data layer · Cryptography",
+      "start": 151.024,
+      "end": 176.944,
+      "cues": [
+        {
+          "start": 151.824,
+          "end": 158.992,
+          "text": "The data layer is cryptography, which noise cannot imitate: every frame carries an HMAC-SHA256 tag made with a secret key."
+        },
+        {
+          "start": 159.412,
+          "end": 165.668,
+          "text": "Change one bit, by accident or on purpose, and the tag breaks: the frame is dropped and requested again."
+        },
+        {
+          "start": 166.088,
+          "end": 175.944,
+          "text": "Either deterministic tier, data or physical, rejects a frame. When two tiers fire at once, the link is quarantined, and the key is changed only if someone holds it."
+        }
+      ]
+    },
+    {
+      "id": "result",
+      "chapter": "Result",
+      "start": 176.944,
+      "end": 194.776,
+      "cues": [
+        {
+          "start": 177.744,
+          "end": 183.728,
+          "text": "In our tests, every attack packet was flagged, and no corrupted frame reached the analyst."
+        },
+        {
+          "start": 184.148,
+          "end": 188.436,
+          "text": "About one and a half percent of genuine packets were held back for review."
+        },
+        {
+          "start": 188.856,
+          "end": 190.776,
+          "text": "Try it live on the testbed, in the dashboard folder of our code."
+        }
+      ]
+    }
+  ]
+}
